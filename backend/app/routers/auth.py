@@ -45,15 +45,3 @@ def me(current_user: User = Depends(get_current_user)):
     return UserOut.model_validate(current_user)
 
 
-@router.post("/bootstrap", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
-def bootstrap(body: LoginRequest, db: Session = Depends(get_db)):
-    if db.query(User).count() > 0:
-        raise HTTPException(status_code=403, detail="Bootstrap unavailable.")
-    from app.auth import hash_password
-    user = User(email=body.email.lower().strip(), password_hash=hash_password(body.password), full_name="Matt C", role="admin")
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    return TokenResponse(access_token=create_access_token(user.id), user=UserOut.model_validate(user))
-
-
