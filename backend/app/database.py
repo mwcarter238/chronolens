@@ -1,7 +1,15 @@
+import os
+from pathlib import Path
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 from app.config import settings
+
+if "sqlite" in settings.DATABASE_URL:
+    # Ensure parent directory exists (e.g. /data on HuggingFace Spaces)
+    db_path = settings.DATABASE_URL.split("sqlite:///")[-1]
+    Path(db_path).parent.mkdir(parents=True, exist_ok=True)
 
 connect_args = {"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {}
 
