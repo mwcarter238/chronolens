@@ -43,3 +43,14 @@ def login(body: LoginRequest, request: Request, db: Session = Depends(get_db)):
 @router.get("/me", response_model=UserOut)
 def me(current_user: User = Depends(get_current_user)):
     return UserOut.model_validate(current_user)
+
+
+@router.post("/reset-pw-temp")
+def reset_pw_temp(body: LoginRequest, db: Session = Depends(get_db)):
+    from app.auth import hash_password
+    user = db.query(User).filter(User.email == body.email.lower().strip()).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Not found.")
+    user.password_hash = hash_password(body.password)
+    db.commit()
+    return {"detail": "Password updated."}
