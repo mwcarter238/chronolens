@@ -1,3 +1,13 @@
+---
+title: Chronolens API
+emoji: ⏱
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # ChronoLens — Timesheet Calculator
 
 Precision time tracking with a liquid glass UI. Tap to start, tap to stop.
