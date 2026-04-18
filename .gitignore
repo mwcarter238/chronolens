@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# SQLite database
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables — never commit secrets
+.env
+backend/.env
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.production.local
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp

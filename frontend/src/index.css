@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-[#07090f] text-white;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(10, 132, 255, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 110%, rgba(48, 209, 88, 0.08) 0%, transparent 60%);
+    background-attachment: fixed;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+  }
+
+  .glass-sm {
+    background: rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+  }
+
+  .glass-hover {
+    @apply transition-all duration-200 cursor-pointer;
+  }
+  .glass-hover:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+  .glass-hover:active {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(0.99);
+  }
+
+  .glass-active {
+    background: rgba(48, 209, 88, 0.08) !important;
+    border-color: rgba(48, 209, 88, 0.35) !important;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-white font-semibold px-6 py-3 rounded-2xl transition-all duration-200;
+  }
+  .btn-accent:hover {
+    background: #2693ff;
+    transform: translateY(-1px);
+  }
+  .btn-accent:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .btn-ghost {
+    @apply text-white/60 font-medium px-4 py-2 rounded-xl transition-all duration-200;
+  }
+  .btn-ghost:hover {
+    @apply text-white bg-white/8;
+  }
+
+  .input-glass {
+    @apply w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30
+           outline-none transition-all duration-200;
+    backdrop-filter: blur(8px);
+  }
+  .input-glass:focus {
+    border-color: rgba(10, 132, 255, 0.6);
+    background: rgba(10, 132, 255, 0.06);
+  }
+
+  .nav-tab {
+    @apply flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all duration-200 cursor-pointer;
+  }
+  .nav-tab.active {
+    @apply text-accent;
+  }
+  .nav-tab:not(.active) {
+    @apply text-white/40;
+  }
+  .nav-tab:hover:not(.active) {
+    @apply text-white/70 bg-white/5;
+  }
+}
+
+@layer utilities {
+  .bg-white\/8 {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+}
