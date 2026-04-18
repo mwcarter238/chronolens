@@ -45,12 +45,14 @@ def me(current_user: User = Depends(get_current_user)):
     return UserOut.model_validate(current_user)
 
 
-@router.post("/reset-pw-temp")
-def reset_pw_temp(body: LoginRequest, db: Session = Depends(get_db)):
+@router.post("/bootstrap", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
+def bootstrap(body: LoginRequest, db: Session = Depends(get_db)):
+    """One-time admin seed — only works when no users exist."""
+    if db.query(User).count() > 0:
+        raise HTTPException(status_code=403, detail="Bootstrap unavailable.")
     from app.auth import hash_password
-    user = db.query(User).filter(User.email == body.email.lower().strip()).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="Not found.")
-    user.password_hash = hash_password(body.password)
+    user = User(email=body.email.lower().strip(), password_hash=hash_password(body.password), full_name="Matt C", role="admin")
+    db.add(user)
     db.commit()
-    return {"detail": "Password updated."}
+    db.refresh(user)
+    return TokenResponse(access_token=create_access_token(user.id), user=UserOut.model_validate(user))
