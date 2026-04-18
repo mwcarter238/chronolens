@@ -15,7 +15,7 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.VITE_BASE_PATH ?? '/'}>
       <Routes>
         <Route path="/login" element={<Login />} />
         {/* Public invite-acceptance page — accessible without a session */}
